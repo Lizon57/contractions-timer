@@ -1,5 +1,5 @@
-@use "@/styles/mixins/constractions-list" as *;
-@use "@/styles/variables/colors";
+@use "../mixins/constractions-list" as *;
+@use "../variables/colors";
 
 .constractions-list-head-container {
     @include constractions-list();

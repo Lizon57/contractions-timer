@@ -15,7 +15,12 @@ export const ConstractionsList: React.FC<ConstractionsListProps> = ({ constracti
             <ConstractionsListHead />
             <div className="list-container">
                 {constractions.map((constraction, index) => {
-                    return <ConstractionPreview key={constraction.start} number={index} />
+                    return <ConstractionPreview
+                        key={constraction.start}
+                        number={index}
+                        constraction={constraction}
+                        prevConstraction={constractions[index - 1]}
+                    />
                 })}
             </div>
         </div>
