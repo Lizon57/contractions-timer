@@ -1,0 +1,5 @@
+@use "@/styles/mixins/constractions-list" as *;
+
+.constraction-preview-container {
+    @include constractions-list();
+}

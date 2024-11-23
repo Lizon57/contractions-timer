@@ -6,5 +6,10 @@ div.home-page-container {
 
     .content-container {
         grid-column: 2/3;
+
+        display: grid;
+        grid-template-rows: auto 1fr minmax(min-content, 10vh);
+
+        height: 95vh;
     }
 }

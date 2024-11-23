@@ -1,0 +1,1 @@
+export const MAX_CONSTRACTIONS_LAPS = 20
