@@ -1,0 +1,18 @@
+@use "@/styles/variables/colors-scheme";
+@use "@/styles/variables/colors";
+
+.timer-button-container {
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+        border-radius: 50%;
+        border: 4px solid colors.$black;
+        background-color: colors-scheme.$background-contrast;
+        font-size: 2rem;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+}
