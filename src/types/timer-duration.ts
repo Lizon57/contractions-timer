@@ -1,4 +1,4 @@
 export type TimerDuration = {
-    start: undefined | number;
-    end: undefined | number;
+    start: number;
+    end: number;
 }

@@ -1,3 +1,4 @@
+import { FaRegTrashAlt } from "react-icons/fa";
 import { timeService } from "../services/time.service";
 import { TimerDuration } from "../types/timer-duration"
 
@@ -5,11 +6,11 @@ type ConstractionPreviewProps = {
     number: number;
     constraction: TimerDuration
     prevConstraction: undefined | TimerDuration
+    onRemoveConstraction: (startTime: number) => void
 }
 
 
-export const ConstractionPreview: React.FC<ConstractionPreviewProps> = ({ number, constraction, prevConstraction }) => {
-    if (!constraction.start || !constraction.end) return
+export const ConstractionPreview: React.FC<ConstractionPreviewProps> = ({ number, constraction, prevConstraction, onRemoveConstraction }) => {
     const constractionTime = timeService.getMSDifference(constraction.start, constraction.end)
 
     let prevConstractionDiffrenceTime = undefined
@@ -20,13 +21,13 @@ export const ConstractionPreview: React.FC<ConstractionPreviewProps> = ({ number
     return (
         <div className="constraction-preview-container">
             <span className="count">{number + 1}</span>
-            <span className="time">{timeService.getHHMMDisplayTime(constraction?.start)}</span>
-            <span className="time">{timeService.getHHMMDisplayTime(constraction?.end)}</span>
+            <span className="time">{timeService.getHHMMDisplayTime(constraction.start)}</span>
+            <span className="time">{timeService.getHHMMDisplayTime(constraction.end)}</span>
             <span className="duration">{timeService.getMMSSDifferenceDisplay(constractionTime)}</span>
             {prevConstractionDiffrenceTime
                 ? <span>{timeService.getMMSSDifferenceDisplay(prevConstractionDiffrenceTime)}</span>
                 : <span></span>}
-            <span className="remove"></span>
+            <button className="remove" onClick={() => onRemoveConstraction(constraction.start)}><FaRegTrashAlt /></button>
         </div>
     )
 }

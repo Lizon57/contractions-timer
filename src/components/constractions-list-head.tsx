@@ -5,7 +5,7 @@ export const ConstractionsListHead = () => {
             <span className="time">התחלה</span>
             <span className="time">סיום</span>
             <span className="duration">זמן</span>
-            <span className="duration-gap">ציר קודם</span>
+            <span className="duration-gap">מרווח מציר קודם</span>
             <span className="remove"></span>
         </div>
     )

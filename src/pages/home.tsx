@@ -39,11 +39,29 @@ export const Home = () => {
         }
     }
 
+    const onRemoveConstraction = (startTime: number) => {
+        const newConstractions = constractionsService.removeConstraction(startTime)
+        setConstractions(newConstractions)
+    }
+
+    const onClearConstractions = () => {
+        const shouldClearConstractions = confirm('באמת למחוק הכל?')
+        if (!shouldClearConstractions) return
+
+        constractionsService.saveConstractionList()
+        setConstractions([])
+    }
+
+
     return (
         <div className="home-page-container">
             <div className="content-container">
                 <Title />
-                <ConstractionsList constractions={constractions} />
+                <ConstractionsList
+                    constractions={constractions}
+                    onRemoveConstraction={onRemoveConstraction}
+                    onClearConstractions={onClearConstractions}
+                />
                 <TimerButton onClick={onTimerButtonClick} isTimerRunning={isTimerRunning} />
             </div>
         </div>
