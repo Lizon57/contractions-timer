@@ -1,3 +1,7 @@
+@use "../variables/colors";
+
 h1.title-container {
     text-align: center;
+    color: colors.$blue-primary;
+    text-shadow: 2px 2px 2px colors.$black;    
 }

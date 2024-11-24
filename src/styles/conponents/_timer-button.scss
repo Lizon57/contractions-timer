@@ -10,9 +10,14 @@
         cursor: pointer;
         border-radius: 50%;
         border: 4px solid colors.$black;
-        background-color: colors-scheme.$background-contrast;
+        background-color: colors-scheme.$background-primary;
+        color: colors.$white;
         font-size: 2rem;
         padding: 1rem;
         margin: 0 auto;
+
+        svg {
+            filter: drop-shadow(1px 1px 1px colors.$black);
+        }
     }
 }

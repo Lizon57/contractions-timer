@@ -1,3 +1,6 @@
+@use "../variables/colors-scheme";
+@use "../variables/colors";
+
 .constractions-list-container {
     margin-block-end: 1rem;
     max-height: 80vh;
@@ -8,6 +11,8 @@
         flex-direction: column-reverse;
 
         margin-block-end: 1rem;
+        max-height: 70vh;
+        overflow: auto;
     }
 
     .reset-list {
@@ -20,6 +25,9 @@
             gap: 0.5rem;
 
             cursor: pointer;
+            border-radius: 0.5rem;
+            border-color: colors.$black;
+            background-color: colors-scheme.$background-primary;
             padding: 0.2rem 0.5rem;
         }
     }

@@ -1,7 +1,10 @@
 @use "../mixins/constractions-list" as *;
+@use "../variables/colors-scheme";
+
 
 .constraction-preview-container {
     @include constractions-list();
+    background-color: colors-scheme.$background-contrast;
 
     button.remove {
         cursor: pointer;

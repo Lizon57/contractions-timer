@@ -1,12 +1,17 @@
 @use "../mixins/constractions-list" as *;
 @use "../variables/colors";
+@use "../variables/colors-scheme";
+
 
 .constractions-list-head-container {
     @include constractions-list();
 
+    position: sticky;
+    top: 0;
+
     border-start-end-radius: 0.5rem;
     border-start-start-radius: 0.5rem;
-    background-color: colors.$white;
+    background-color: colors-scheme.$background-primary;
     font-size: 0.8rem;
     font-weight: bold;
     text-align: center;

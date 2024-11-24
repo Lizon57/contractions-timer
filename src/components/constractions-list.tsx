@@ -27,7 +27,7 @@ export const ConstractionsList: React.FC<ConstractionsListProps> = ({ constracti
             </div>
             {constractions.length > 0
                 && <div className="reset-list">
-                    <button onClick={onClearConstractions}><FaHistory /> אפס רשימה</button>
+                    <button onClick={onClearConstractions}><FaHistory /> איפוס רשימה</button>
                 </div>}
         </div>
     )

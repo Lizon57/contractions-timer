@@ -1,7 +1,7 @@
-@use "../variables/colors-scheme";
-
 body {
     direction: rtl;
-    background-color: colors-scheme.$background-primary;
+    background-image: url("./app-background.jpg");
+    background-position: center center;
+    background-size: cover;
     font-family: Arial, Helvetica, sans-serif;
 }
