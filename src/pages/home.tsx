@@ -6,14 +6,32 @@ import { constractionsService } from "../services/constractions.service"
 import { ConstractionsList } from "../components/constractions-list"
 import { EMPTY_TIMER_DURATION } from "../consts/empty-timer-duration"
 import { Loading } from "../components/loading"
+import { APP_MESSAGES } from "../consts/app-phrases"
 
 export const Home = () => {
     const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string>()
+    const [isError, setIsError] = useState(false)
 
     const [isTimerRunning, setIsTimerRunning] = useState(false)
     const [timerDuration, setTimerDuration] = useState<TimerDuration>(EMPTY_TIMER_DURATION)
     const [constractions, setConstractions] = useState<Array<TimerDuration>>(constractionsService.getConstractionList())
+
+
+    useEffect(() => {
+        queryConstractions()
+    }, [])
+
+
+    async function queryConstractions() {
+        try {
+            const data: TimerDuration[] = []
+            setConstractions(data)
+            setIsLoading(false)
+        } catch (_) {
+            setIsError(true)
+        }
+    }
+
 
     useEffect(() => {
         if (!timerDuration.end) return
@@ -49,7 +67,7 @@ export const Home = () => {
     }
 
     const onClearConstractions = () => {
-        const shouldClearConstractions = confirm('באמת למחוק הכל?')
+        const shouldClearConstractions = confirm(APP_MESSAGES.delete_all_confirm)
         if (!shouldClearConstractions) return
 
         constractionsService.saveConstractionList()

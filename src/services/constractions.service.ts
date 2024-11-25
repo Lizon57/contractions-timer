@@ -4,6 +4,11 @@ import { TimerDuration } from "../types/timer-duration"
 import { localStorageService } from "./local-storage.service"
 
 
+async function getConstractionListFromDB() {
+    
+}
+
+
 function getConstractionList() {
     return localStorageService.read(CONSTRACTION_STORAGE_KEY) || []
 }
@@ -34,6 +39,7 @@ function removeConstraction(startTime: number) {
 
 
 export const constractionsService = {
+    getConstractionListFromDB,
     getConstractionList,
     saveConstractionList,
     addConstractionTime,
