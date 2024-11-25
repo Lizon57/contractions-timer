@@ -5,8 +5,12 @@ import { TimerDuration } from "../types/timer-duration"
 import { constractionsService } from "../services/constractions.service"
 import { ConstractionsList } from "../components/constractions-list"
 import { EMPTY_TIMER_DURATION } from "../consts/empty-timer-duration"
+import { Loading } from "../components/loading"
 
 export const Home = () => {
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<string>()
+
     const [isTimerRunning, setIsTimerRunning] = useState(false)
     const [timerDuration, setTimerDuration] = useState<TimerDuration>(EMPTY_TIMER_DURATION)
     const [constractions, setConstractions] = useState<Array<TimerDuration>>(constractionsService.getConstractionList())
@@ -51,6 +55,8 @@ export const Home = () => {
         constractionsService.saveConstractionList()
         setConstractions([])
     }
+
+    if (isLoading) return <Loading />
 
 
     return (

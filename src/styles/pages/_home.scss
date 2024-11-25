@@ -4,6 +4,10 @@ div.home-page-container {
     display: grid;
     grid-template-columns: $side-size minmax(auto, 360px) $side-size;
 
+    background-image: url("./app-background.jpg");
+    background-position: center center;
+    background-size: cover;
+
     .content-container {
         grid-column: 2/3;
 
