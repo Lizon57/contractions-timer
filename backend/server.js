@@ -1,15 +1,16 @@
 const express = require('express')
+const dotenv = require('dotenv')
 const cors = require('cors')
 const app = express()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 
-
+dotenv.config()
 app.use(express.json())
 
 
 let connectedDb = null
 const mongoConfig = {
-    dbURL: 'mongodb+srv://orenyaniv90:yxC7nRmHae2C0fYK@constractionsdb.oajvt.mongodb.net/?retryWrites=true&w=majority&appName=ConstractionsDB',
+    dbURL: `mongodb+srv://orenyaniv90:${process.env.ATLAS_CLUSTER_PASSWORD}@constractionsdb.oajvt.mongodb.net/?retryWrites=true&w=majority&appName=ConstractionsDB`,
     dbName: 'ConstractionsDB'
 }
 
