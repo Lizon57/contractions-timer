@@ -1,5 +1,12 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import DOMPurify from 'dompurify'
+import { localStorageService } from './local-storage.service'
+import { CONSTRACTION_STORAGE_KEY } from '../consts/storage-keys'
+
+
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : '//localhost:3030/api/'
 
 
 async function ajax(endpoint: string, method = 'GET', data: null | any = null) {
@@ -8,33 +15,35 @@ async function ajax(endpoint: string, method = 'GET', data: null | any = null) {
 
     try {
         const res = await axios({
-            url: endpoint,
+            url: `${BASE_URL}${endpoint}`,
             method,
-            data: (method === 'GET') ? null : data,
+            data,
+            withCredentials: true,
             params: (method === 'GET') ? data : null,
-            headers: {
-                Origin: 'https://abraweather.onrender.com/'
-            }
         })
         return res.data
     } catch (err) {
         console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: `, data)
+        const error = err as AxiosError
+        if (error.response && error.response.status === 401) {
+            localStorageService.save(CONSTRACTION_STORAGE_KEY, '')
+        }
         throw err
     }
 }
 
 
 export const httpService = {
-    get<T>(endpoint: string, data?: T) {
+    get(endpoint: string, data?: any) {
         return ajax(endpoint, 'GET', data)
     },
-    post<T>(endpoint: string, data?: T) {
+    post(endpoint: string, data?: any) {
         return ajax(endpoint, 'POST', data)
     },
-    put<T>(endpoint: string, data?: T) {
+    put(endpoint: string, data?: any) {
         return ajax(endpoint, 'PUT', data)
     },
-    delete<T>(endpoint: string, data?: T) {
+    delete(endpoint: string, data?: any) {
         return ajax(endpoint, 'DELETE', data)
     }
 }

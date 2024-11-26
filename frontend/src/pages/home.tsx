@@ -5,7 +5,8 @@ import { TimerDuration } from "../types/timer-duration"
 import { constractionsService } from "../services/constractions.service"
 import { ConstractionsList } from "../components/constractions-list"
 import { EMPTY_TIMER_DURATION } from "../consts/empty-timer-duration"
-import { Loading } from "../components/loading"
+import { Loading } from "./loading"
+import { Error } from "./error"
 import { APP_MESSAGES } from "../consts/app-phrases"
 
 export const Home = () => {
@@ -14,41 +15,79 @@ export const Home = () => {
 
     const [isTimerRunning, setIsTimerRunning] = useState(false)
     const [timerDuration, setTimerDuration] = useState<TimerDuration>(EMPTY_TIMER_DURATION)
-    const [constractions, setConstractions] = useState<Array<TimerDuration>>(constractionsService.getConstractionList())
+    const [constractions, setConstractions] = useState<Array<TimerDuration>>([])
 
 
     useEffect(() => {
         queryConstractions()
     }, [])
 
+    useEffect(() => {
+        if (!timerDuration.end) return
+        onAddConstraction()
+    }, [timerDuration])
+
+
 
     async function queryConstractions() {
+        setIsLoading(true)
+
         try {
-            const data: TimerDuration[] = []
+            const data: TimerDuration[] = await constractionsService.getConstractionListFromDB()
             setConstractions(data)
-            setIsLoading(false)
         } catch (_) {
             setIsError(true)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const onAddConstraction = async () => {
+        try {
+            setIsLoading(true)
+            const newConstractions = await constractionsService.addConstractionToDB(timerDuration)
+            setTimerDuration(EMPTY_TIMER_DURATION)
+            setConstractions(newConstractions)
+        } catch (_) {
+            setIsError(true)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const onRemoveConstraction = async (id?: string) => {
+        try {
+            setIsLoading(true)
+            const newConstractions = await constractionsService.removeConstractionFromDB(id)
+            setConstractions(newConstractions)
+        } catch (_) {
+            setIsError(true)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const onClearConstractions = async () => {
+        const shouldClearConstractions = confirm(APP_MESSAGES.delete_all_confirm)
+        if (!shouldClearConstractions) return
+
+        try {
+            setIsLoading(true)
+            await constractionsService.removeAllConstractionsFromDB()
+            setConstractions([])
+        } catch (_) {
+            setIsError(true)
+        } finally {
+            setIsLoading(false)
         }
     }
 
 
-    useEffect(() => {
-        if (!timerDuration.end) return
-
-        const currConstractions = structuredClone(constractions)
-
-        constractionsService.addConstractionTime(timerDuration)
-        currConstractions.push(timerDuration)
-        setConstractions(currConstractions)
-        setTimerDuration(EMPTY_TIMER_DURATION)
-    }, [timerDuration])
 
     const onTimerButtonClick = () => {
-        const prevIsTimerRunning = isTimerRunning
         setIsTimerRunning(!isTimerRunning)
 
-        if (!prevIsTimerRunning) {
+        if (!isTimerRunning) {
             setTimerDuration({
                 ...timerDuration,
                 start: Date.now()
@@ -61,20 +100,10 @@ export const Home = () => {
         }
     }
 
-    const onRemoveConstraction = (startTime: number) => {
-        const newConstractions = constractionsService.removeConstraction(startTime)
-        setConstractions(newConstractions)
-    }
 
-    const onClearConstractions = () => {
-        const shouldClearConstractions = confirm(APP_MESSAGES.delete_all_confirm)
-        if (!shouldClearConstractions) return
-
-        constractionsService.saveConstractionList()
-        setConstractions([])
-    }
 
     if (isLoading) return <Loading />
+    if (isError) return <Error />
 
 
     return (

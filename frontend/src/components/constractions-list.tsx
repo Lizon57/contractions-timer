@@ -5,7 +5,7 @@ import { ConstractionsListHead } from "./constractions-list-head"
 
 type ConstractionsListProps = {
     constractions: Array<TimerDuration>
-    onRemoveConstraction: (startTime: number) => void
+    onRemoveConstraction: (id?: string) => void
     onClearConstractions: () => void
 }
 

@@ -6,7 +6,7 @@ type ConstractionPreviewProps = {
     number: number;
     constraction: TimerDuration
     prevConstraction: undefined | TimerDuration
-    onRemoveConstraction: (startTime: number) => void
+    onRemoveConstraction: (id?: string) => void
 }
 
 
@@ -27,7 +27,7 @@ export const ConstractionPreview: React.FC<ConstractionPreviewProps> = ({ number
             {prevConstractionDiffrenceTime
                 ? <span>{timeService.getMMSSDifferenceDisplay(prevConstractionDiffrenceTime)}</span>
                 : <span></span>}
-            <button className="remove" onClick={() => onRemoveConstraction(constraction.start)}><FaRegTrashAlt /></button>
+            <button className="remove" onClick={() => onRemoveConstraction(constraction._id)}><FaRegTrashAlt /></button>
         </div>
     )
 }
